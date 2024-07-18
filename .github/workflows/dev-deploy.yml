@@ -43,11 +43,11 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: '.'
-          
+          path: 'dist'
+
+      - name: Set CNAME for Dev Site
+        run: echo 'dev.tobyueno.com' > dist/CNAME
+
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
-          cname: dev.tobyueno.com
+        id: deployment
+        uses: actions/deploy-pages@v2
