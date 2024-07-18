@@ -31,11 +31,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Build Elm artifact
+      - name: Set up Elm
         uses: jorelali/setup-elm@v5
         with:
           elm-version: 0.19.1
-      - run: elm make src/Main.elm
+
+      - name: Build Elm artifact
+        run: |
+          mkdir -p dist
+          elm make src/Main.elm --output=dist/main.js
+
+      - name: Verify Build Output
+        run: ls -la dist
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
