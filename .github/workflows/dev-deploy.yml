@@ -33,9 +33,6 @@ jobs:
         with:
           elm-version: 0.19.1
       - run: elm make src/Main.elm --output=dist/Main.js
-
-      - name: Create CNAME file
-        run: echo "dev.tobyueno.com" > dist/CNAME
         
       - name: Setup Pages
         uses: actions/configure-pages@v3
