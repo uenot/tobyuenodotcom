@@ -36,6 +36,9 @@ jobs:
           du -sh ./dist
           find ./dist -type l
 
+      - name: List dist directory contents
+        run: ls -lR ./dist
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
