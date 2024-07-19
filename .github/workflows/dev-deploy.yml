@@ -1,60 +1,35 @@
-# Made by Isaac Van Doren. Source at https://github.com/isaacvando/elm-to-gh-pages.
-name: Deploy site to dev 
+name: Deploy Dev to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["dev"]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# Cancel current deployment when a new push occurs
-concurrency:
-  group: "dev-pages"
-  cancel-in-progress: false
+    branches:
+      - dev
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Elm
-        uses: jorelali/setup-elm@v5
+        uses: jfairbank/setup-elm@v1
         with:
-          elm-version: 0.19.1
+          elm-version: '0.19.1'
 
-      - name: Build Elm artifact
-        run: |
-          mkdir -p dist
-          elm make src/Main.elm --output=dist/main.js
+      - name: Install dependencies
+        run: elm make
 
-      - name: Verify Build Output
-        run: ls -la dist
+      - name: Build the project
+        run: elm make src/Main.elm --output=dist/main.js
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: 'dist'
-
-      - name: Set CNAME for Dev Site
-        run: echo 'dev.tobyueno.com' > dist/CNAME
+      - name: Create CNAME file
+        run: echo "dev.tobyueno.com" > dist/CNAME
 
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: dev.tobyueno.com
