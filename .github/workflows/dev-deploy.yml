@@ -60,7 +60,11 @@ jobs:
           name: github-pages
 
       - name: Verify downloaded artifact
-        run: ls -lR ./github-pages
+        run: |
+          echo "Listing files in the working directory:"
+          ls -lR
+          echo "Listing files in the dist directory:"
+          ls -lR ./dist
         
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
