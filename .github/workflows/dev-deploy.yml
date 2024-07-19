@@ -18,35 +18,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Elm
-        run: |
-          curl -L https://github.com/elm/compiler/releases/download/0.19.1/binary-for-linux-64-bit.gz -o elm.gz
-          gunzip elm.gz
-          chmod +x elm
-          sudo mv elm /usr/local/bin/
+      jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Build the project
-        run: elm make src/Main.elm --output=dist/main.js
+      - name: Build Elm artifact
+        uses: jorelali/setup-elm@v5
+        with:
+          elm-version: 0.19.1
+      - run: elm make src/Main.elm --output=dist/Main.js
 
       - name: Create CNAME file
         run: echo "dev.tobyueno.com" > dist/CNAME
-
-      - name: Verify artifact size and content
-        run: |
-          du -sh ./dist
-          find ./dist -type l
-
+        
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-pages-artifact@v1
         with:
-          path: ./dist
-          name: github-pages-dev
+          path: 'dist'
           
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-        with:
-          artifact_name: github-pages-dev
+
