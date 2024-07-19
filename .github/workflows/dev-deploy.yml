@@ -36,9 +36,6 @@ jobs:
           du -sh ./dist
           find ./dist -type l
 
-      - name: List dist directory contents
-        run: ls -lR ./dist
-
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -49,23 +46,15 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      pages: write
-      id-token: write
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: github-pages
-
-      - name: Verify downloaded artifact
-        run: |
-          echo "Listing files in the working directory:"
-          ls -lR
-          echo "Listing files in the dist directory:"
-          ls -lR ./dist
-        
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
         with:
