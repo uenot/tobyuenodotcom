@@ -20,7 +20,7 @@ jobs:
             https://api.github.com/repos/uenot/tobyuenodotcom-dev/dispatches \
             -d '{"event_type":"deploy"}' \
             | jq '.status')
-          if [ $response != "204" ]; then
+          if [ "$response" != "204" ]; then
             echo "ERROR: expected response 204 from dispatch request, but got $response"
             exit 1
           fi
