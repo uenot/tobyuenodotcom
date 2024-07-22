@@ -1,40 +1,24 @@
-name: Deploy Dev to GitHub Pages
+name: dev-deploy
 
 on:
   push:
     branches:
       - dev
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  trigger-source:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Build Elm artifact
-        uses: jorelali/setup-elm@v5
-        with:
-          elm-version: 0.19.1
-      - run: elm make src/Main.elm --output=dist/Main.js
-        
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: 'dist'
+      - name: Dispatch Dev Workflow
+        env:
+          pat: ${{ secrets.ACTIONS_KEY }}
+        run: |
+          curl -L \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer $ACTIONS_KEY" \
+          https://api.github.com/repos/uenot/tobyuenodotcom-dev/dispatches \
+          -d '{"event_type":"deploy"}'
           
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+
 
