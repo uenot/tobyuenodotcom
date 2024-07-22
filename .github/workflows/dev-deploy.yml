@@ -6,7 +6,7 @@ on:
       - dev
 
 jobs:
-  trigger-downstram:
+  trigger-downstream:
     runs-on: ubuntu-latest
     steps:
       - name: dispatch-dev
