@@ -19,8 +19,11 @@ jobs:
             -H "Authorization: Bearer $pat" \
             https://api.github.com/repos/uenot/tobyuenodotcom-dev/dispatches \
             -d '{"event_type":"deploy"}' \
-            | awk '/^HTTP/{print $2}')
-          echo $response
+            | jq '.status')
+          if [ $response != 204 ]; then
+            echo "ERROR: expected response 204 from dispatch request, but got $response"
+            exit 1
+          fi
             
           
 
