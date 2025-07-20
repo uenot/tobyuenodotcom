@@ -1,1 +1,1 @@
-https://tobyueno.com
+tobyueno.com
