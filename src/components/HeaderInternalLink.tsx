@@ -6,10 +6,10 @@ type Props = {
   children: React.ReactNode;
 };
 
-const HeaderLink = (props: Props) => {
+const HeaderInternalLink = (props: Props) => {
   const loc = useLocation();
   const onClick = () => logInternalLink(loc.pathname, props.to);
   return <Link {...props} onClick={onClick} />;
 };
 
-export default HeaderLink;
+export default HeaderInternalLink;

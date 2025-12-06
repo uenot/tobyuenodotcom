@@ -8,7 +8,7 @@ const client = createClient<paths>({ baseUrl: "" });
 type Event = components["schemas"]["Event"];
 
 const logEvent = async (body: Event) =>
-  client.POST("/api/blue/event", { body });
+  client.POST("/api/buskin/event", { body });
 
 const logVisit = async (src: string) => logEvent({ tag: "Visit", src });
 export const logInternalLink = async (src: string, dest: string) =>

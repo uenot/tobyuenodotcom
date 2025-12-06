@@ -20,7 +20,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/blue/event": {
+    "/api/buskin/event": {
         parameters: {
             query?: never;
             header?: never;
@@ -34,6 +34,7 @@ export interface paths {
                 query?: never;
                 header?: {
                     "User-Agent"?: string;
+                    "Fly-Client-IP"?: string;
                 };
                 path?: never;
                 cookie?: never;
@@ -52,7 +53,7 @@ export interface paths {
                         "application/json;charset=utf-8": components["schemas"]["EventResponse"];
                     };
                 };
-                /** @description Invalid `body` or `User-Agent` */
+                /** @description Invalid `body` or `Fly-Client-IP` or `User-Agent` */
                 400: {
                     headers: {
                         [name: string]: unknown;
@@ -61,6 +62,22 @@ export interface paths {
                 };
             };
         };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/files": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
