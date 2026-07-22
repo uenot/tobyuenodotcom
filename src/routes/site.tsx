@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import PageContent from "../components/PageContent";
 
 export const Route = createFileRoute("/site")({
   component: Site,
@@ -10,7 +11,7 @@ function Site() {
       <h1 className="flex justify-center text-3xl p-4 font-bold">
         About the Site
       </h1>
-      <div className="max-w-1/2 flex flex-col items-center justify-center space-y-3">
+      <PageContent>
         <p>
           This version of the site began in the summer of 2025, and is built
           using React & TypeScript. Other technologies used include Tailwind for
@@ -18,11 +19,17 @@ function Site() {
           system.
         </p>
         <p>
-          I built this site with the side goal of familiarizing myself with the
-          modern React ecosystem, as preparation for my upcoming research on
-          reactive programming with effect handlers.
+          There also exists a Haskell backend, using the Servant, Beam, and
+          Effectful packages. It doesn't do much right now besides receive
+          pings, but the hope is that it will become useful in future site
+          extensions.
         </p>
-      </div>
+        <p>
+          I built this site with the side goal of familiarizing myself with the
+          modern React ecosystem, as preparation for my research on reactive
+          programming with effect handlers.
+        </p>
+      </PageContent>
     </>
   );
 }

@@ -13,7 +13,7 @@ const FooterLink = (props: Props) => {
     <a
       {...props}
       onClick={onClick}
-      className="flex-1 text-center"
+      className="text-center"
       target="_blank"
       rel="noopener noreferrer"
     />
